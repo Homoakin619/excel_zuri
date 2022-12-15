@@ -27,14 +27,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
-    '127.0.0.1',
-    '127.0.0.1:8000',
-    'localhost:8000',
-    '127.0.0.1:8000',
-    'example.com'
+    '*'
 ]
 
 
@@ -74,6 +70,14 @@ EMAIL_HOST_PASSWORD = 'mys3cr3tp4ssw0rd'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'TestSite Team <noreply@example.com>'
 
+if not DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = env('EMAIL_HOST')
+    EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+    
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
